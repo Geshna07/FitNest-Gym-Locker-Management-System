@@ -1,0 +1,142 @@
+
+@baseUrl = http://localhost:3000
+
+### Get all members
+GET {{baseUrl}}/members/
+
+### Get Asha
+GET {{baseUrl}}/members/1/
+
+### Add a member
+POST {{baseUrl}}/members/
+Content-Type: application/json
+
+{
+  "name": "Ravi"
+}
+
+### Get all lockers
+GET {{baseUrl}}/lockers/
+
+### Get Locker 1
+GET {{baseUrl}}/lockers/1/
+
+### Add a locker
+POST {{baseUrl}}/lockers/
+Content-Type: application/json
+
+{
+  "name": "Locker 6 - Demo",
+  "floor": 3
+}
+
+### Update the demo locker
+PUT {{baseUrl}}/lockers/6/
+Content-Type: application/json
+
+{
+  "name": "Locker 6 - Updated",
+  "floor": 4
+}
+
+### Delete the demo locker
+DELETE {{baseUrl}}/lockers/1/
+
+### Invalid locker name
+POST {{baseUrl}}/lockers/
+Content-Type: application/json
+
+{
+  "name": "   ",
+  "floor": 1
+}
+
+### Invalid locker floor
+POST {{baseUrl}}/lockers/
+Content-Type: application/json
+
+{
+  "name": "Locker with invalid floor",
+  "floor": "first"
+}
+
+### Invalid locker update
+PUT {{baseUrl}}/lockers/1/
+Content-Type: application/json
+
+{
+  "name": "Locker 1 - Invalid Update",
+  "floor": -1
+}
+
+### Invalid floor query
+GET {{baseUrl}}/lockers/?floor=ground
+
+### Duplicate locker name
+POST {{baseUrl}}/lockers/
+Content-Type: application/json
+
+{
+  "name": "Locker 1",
+  "floor": 1
+}
+
+### Search lockers on floor 1
+GET {{baseUrl}}/lockers/?floor=1
+
+### Search lockers on floor 2
+GET {{baseUrl}}/lockers/?floor=2
+
+### View all allotments
+GET {{baseUrl}}/allotments/
+
+### First allotment for Asha
+POST {{baseUrl}}/allotments/
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "lockerId": 1
+}
+
+### Second allotment for Asha
+POST {{baseUrl}}/allotments/
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "lockerId": 2
+}
+
+### Third allotment for Asha
+POST {{baseUrl}}/allotments/
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "lockerId": 3
+}
+
+### Fourth allotment for Asha - should return 409 Limit of 3 reached
+POST {{baseUrl}}/allotments/
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "lockerId": 4
+}
+
+### Return Asha's first allotment
+PUT {{baseUrl}}/allotments/1/return/
+
+### Allot another locker after returning the first
+POST {{baseUrl}}/allotments/
+Content-Type: application/json
+
+{
+  "memberId": 1,
+  "lockerId": 4
+}
+
+### View allotments after the return and new allotment
+GET {{baseUrl}}/allotments/
